@@ -1,0 +1,137 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+}
+
+
+header {
+    background-color: #004A8D;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+
+.container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    height: calc(100vh - 120px); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+form {
+    width: 100%;
+}
+
+h1 {
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+img {
+    max-width: 300px !important;
+    margin-bottom: 20px;
+
+}
+
+input {
+    font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #343638 !important;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    border-color: #004A8D;
+    box-shadow: 0 0 0 0.2rem rgba(0, 74, 141, 0.25);
+}
+
+button {
+    font-size: 1.2rem;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    color: white; 
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.btn-calcular {
+    background-color: #004A8D;
+    color: white;
+}
+
+.btn-calcular:hover {
+    background-color: #003366;
+    color: white; 
+}
+
+.btn-pdf {
+    background-color: #dc3545; 
+    color: white;
+}
+
+.btn-pdf:hover {
+    background-color: #c82333; 
+    color: white; 
+}
+
+.btn:focus {
+    outline: none;
+}
+
+
+footer {
+    background-color: #004A8D;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}

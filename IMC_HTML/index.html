@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de IMC</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<header>
+    <h1>Calculadora de IMC</h1>
+</header>
+
+<div class="container">
+    <div class="content">
+        <div class="mb-4 w-100 text-center">
+            <img src="logosenac.png" alt="Logo Senac" class="img-fluid" id="logo">
+        </div>
+
+        <form id="imcForm" class="p-2">
+            <input class="form-control mb-2" name="idade" id="idade" type="text" placeholder="Digite sua Idade" oninput="Limitar_Idade(this)">
+            <input class="form-control mb-2" name="altura" id="altura" type="text" placeholder="Digite sua Altura" oninput="Limitar_Altura(this)">
+            <input class="form-control mb-2" name="peso" id="peso" type="text" placeholder="Digite seu Peso" maxlength="3" oninput="Limitar_Peso(this)">
+            <button class="btn btn-calcular w-100 mb-2" type="button" onclick="calcularIMC()">Calcular IMC</button>
+            <button class="btn btn-pdf w-100 mb-2" type="button" onclick="imprimirPDF()">Imprimir em PDF</button>
+            <h2 id="resultado" class="titulo text-center mt-3" style="color: #000000;"></h2>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Senac - Todos os direitos reservados</p>
+</footer>
+<script>
+function Limitar_Altura(input) {
+    let valor = input.value.replace(/\D/g, '');  
+    if (valor.length > 1) {
+        valor = valor.substring(0, 1) + '.' + valor.substring(1, 3);  
+    }
+    input.value = valor;
+}
+
+function Limitar_Peso(input) {
+    if (input.value.length > 3) {
+        input.value = input.value.slice(0, 3);
+    }
+}
+
+function Limitar_Idade(input) {
+    if (input.value.length > 2) {
+        input.value = input.value.slice(0, 2);
+    }
+}
+
+function calcularIMC() {
+    const idade = parseInt(document.getElementById('idade').value);
+    const altura = parseFloat(document.getElementById('altura').value);
+    const peso = parseFloat(document.getElementById('peso').value);
+
+    if (isNaN(idade) || isNaN(altura) || isNaN(peso) || idade <= 0 || altura <= 0 || peso <= 0) {
+        alert('Por favor, insira valores válidos para idade, altura e peso.');
+        return;
+    }
+
+    const imc = peso / (altura * altura);
+    const resultadoElement = document.getElementById('resultado');
+   
+    let classificacao = '';
+    if (imc < 18.5) {
+        classificacao = 'Abaixo do peso';
+    } else if (imc < 24.9) {
+        classificacao = 'Peso normal';
+    } else if (imc < 29.9) {
+        classificacao = 'Sobrepeso';
+    } else if (imc < 34.9) {
+        classificacao = 'Obesidade grau I';
+    } else if (imc < 39.9) {
+        classificacao = 'Obesidade grau II';
+    } else {
+        classificacao = 'Obesidade grau III';
+    }
+
+    resultadoElement.textContent = `O seu IMC é ${imc.toFixed(2)} e se encaixa na categoria ${classificacao}. Sua idade é ${idade} anos.`;
+
+
+
+}
+
+function imprimirPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const logoElement = document.getElementById('logo');
+    const logoUrl = logoElement.src;
+
+    fetch(logoUrl)
+        .then(response => response.blob())
+        .then(blob => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        }))
+        .then(base64Logo => {
+            const margin = 5;
+            doc.setLineWidth(1);
+            doc.rect(margin, margin, doc.internal.pageSize.width - 2 * margin, doc.internal.pageSize.height - 2 * margin);
+
+            doc.addImage(base64Logo, 'PNG', 10, 10, 75, 30);
+
+            doc.setFontSize(16);
+            doc.text('Relatório de IMC (Índice de Massa Corporal)', 10, 50);
+
+            doc.setDrawColor(0, 0, 0);
+            doc.setLineWidth(0.5);
+            doc.line(10, 60, doc.internal.pageSize.width - 10, 60);
+
+            doc.setFontSize(14);
+            const altura = parseFloat(document.getElementById('altura').value);
+            const peso = parseFloat(document.getElementById('peso').value);
+            const idade = parseInt(document.getElementById('idade').value);
+
+            // Recalcula o IMC com base nos valores de peso e altura
+            const imc = peso / (altura * altura);
+
+            if (isNaN(imc)) {
+                alert("Erro ao calcular o IMC. Verifique os valores inseridos.");
+                return;
+            }
+
+            doc.text(`Altura: ${altura} metros`, 10, 70);
+            doc.text(`Peso: ${peso} kg`, 10, 80);
+            doc.text(`Idade: ${idade} anos`, 10, 90);
+            doc.text(`Seu IMC é ${imc.toFixed(2)}`, 10, 100);
+
+            doc.setDrawColor(0, 0, 0);
+            doc.setLineWidth(0.5);
+            doc.line(10, 110, doc.internal.pageSize.width - 10, 110);
+
+            let description = '';
+
+            if (imc < 18.5) {
+                description = `Abaixo do Peso:\n\nEsta faixa indica que o peso da pessoa está abaixo do recomendado para a sua altura.\n\nConsequências: Pode sugerir desnutrição ou problemas de saúde relacionados à falta de massa corporal. Recomenda-se consultar um profissional de saúde para avaliar possíveis causas e necessidades nutricionais.`;
+            } else if (imc < 24.9) {
+                description = `Peso Normal:\n\nO peso da pessoa está dentro da faixa considerada saudável para sua altura.\n\nConsequências: Indica um equilíbrio saudável entre peso e altura. Manter um estilo de vida equilibrado com alimentação adequada e exercícios regulares é importante para preservar essa faixa.`;
+            } else if (imc < 29.9) {
+                description = `Sobrepeso:\n\nO peso da pessoa está acima do recomendado, mas ainda não atinge o nível de obesidade.\n\nConsequências: Pode estar associado a um maior risco de problemas de saúde como doenças cardíacas, diabetes tipo 2 e hipertensão. Recomenda-se adotar uma dieta equilibrada e aumentar a atividade física para reduzir o risco.`;
+            } else if (imc < 34.9) {
+                description = `Obesidade Grau I:\n\nA pessoa está classificada como obesa em grau I, o que indica um aumento significativo de peso em relação ao recomendado.\n\nConsequências: A obesidade grau I pode levar a problemas de saúde graves, como doenças cardíacas, diabetes tipo 2 e apneia do sono. Aconselha-se procurar acompanhamento médico e nutricional para controlar o peso.`;
+            } else if (imc < 39.9) {
+                description = `Obesidade Grau II:\n\nA pessoa está classificada como obesa em grau II, o que indica um aumento ainda maior de peso em relação ao recomendado.\n\nConsequências: A obesidade grau II é uma condição séria que pode levar a complicações graves de saúde. Aconselha-se procurar acompanhamento médico e nutricional para controle do peso.`;
+            } else {
+                description = `Obesidade Grau III:\n\nA pessoa está classificada como obesa em grau III, o nível mais alto de obesidade.\n\nConsequências: A obesidade grau III representa um risco muito elevado para a saúde e é associada a um risco muito alto de doenças graves, como diabetes tipo 2, hipertensão, doenças cardíacas e problemas respiratórios. É crucial buscar tratamento médico para gerenciamento do peso.`;
+            }
+
+            const descriptionLines = doc.splitTextToSize(description, doc.internal.pageSize.width - 20);
+            doc.text(descriptionLines, 10, 120);
+
+            doc.save('relatorio_imc.pdf');
+        })
+        .catch(error => {
+            console.error('Erro ao carregar a imagem:', error);
+        });
+}
+
+</script>
+</body>
+</html>

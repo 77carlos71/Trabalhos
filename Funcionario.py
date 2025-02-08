@@ -1,6 +1,14 @@
 import flet as ft
 import openpyxl
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import os
 from collections import Counter
+
+# Este código implementa uma aplicação Flet para exibição e impressão de detalhes de funcionários.
+# Ele permite selecionar um funcionário, visualizar seus detalhes em dois contêineres (branco e cinza)
+# e gerar um relatório em PDF com um layout profissional, incluindo título, separador e rodapé com data/hora.
+# A interface inclui um botão para imprimir os detalhes selecionados.
 
 def main(page: ft.Page):
     page.title = "Funcionário"
@@ -13,6 +21,42 @@ def main(page: ft.Page):
     page.window.center()
     
     nome_column_index = None  # Defina a variável globalmente
+    selected_employee = None  # Armazena os detalhes do funcionário selecionado
+    
+    def generate_pdf(e):
+        """Gera um PDF profissional com os detalhes do funcionário selecionado."""
+        if selected_employee is None:
+            print("Nenhum funcionário selecionado.")
+            return
+        
+        pdf_filename = "Funcionario_Detalhes.pdf"
+        c = canvas.Canvas(pdf_filename, pagesize=letter)
+        width, height = letter
+        
+        # Adicionando título com destaque
+        c.setFont("Helvetica-Bold", 20)
+        c.drawString(100, height - 80, "Relatório Profissional do Funcionário")
+        
+        # Linha separadora
+        c.line(100, height - 85, 500, height - 85)
+        
+        c.setFont("Helvetica-Bold", 14)
+        c.drawString(100, height - 120, "Detalhes do Funcionário:")
+        
+        c.setFont("Helvetica", 12)
+        y_position = height - 150
+        for detail in selected_employee.split('\n'):
+            c.drawString(100, y_position, detail)
+            y_position -= 20
+        
+        # Adicionando rodapé com data de geração
+        from datetime import datetime
+        c.setFont("Helvetica-Oblique", 10)
+        c.drawString(100, 50, f"Relatório gerado em: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
+        
+        c.save()
+        os.system(f"start {pdf_filename}")  # Abre o PDF automaticamente
+
 
     def reset_app(e):
         """Reinicializa a aplicação."""
@@ -76,7 +120,9 @@ def main(page: ft.Page):
 
             def on_show_details(row_data):
                 """Exibe detalhes ao clicar no botão."""
+                nonlocal selected_employee
                 details = "\n".join([f"{headers[i]}: {row_data[i]}" for i in range(len(row_data))])
+                selected_employee = details
                 square_grey.content = ft.Text(details, size=20, color=ft.Colors.BLACK)
                 page.update()
 
@@ -134,7 +180,6 @@ def main(page: ft.Page):
         )
         page.update()
 
-
     def on_file_pick(e):
         """Lê o arquivo Excel e carrega os dados na aplicação."""
         global nome_column_index  # Use a variável global
@@ -187,8 +232,6 @@ def main(page: ft.Page):
                 square_white.content = ft.Text(f"Erro ao ler o arquivo: {str(e)}")
                 page.update()
 
-
-
     file_picker = ft.FilePicker(on_result=on_file_pick)
 
     button_add = ft.ElevatedButton(
@@ -225,6 +268,18 @@ def main(page: ft.Page):
                 ft.ElevatedButton(
                     "Tela Inicial",
                     on_click=reset_app,
+                    style=ft.ButtonStyle(
+                        color={ft.ControlState.DEFAULT: "white"},
+                        bgcolor={ft.ControlState.DEFAULT: "#1e1e1e"},
+                        elevation={"pressed": 0, "": 2},
+                        shape={ft.ControlState.DEFAULT: ft.RoundedRectangleBorder(radius=4)}
+                    ),
+                    width=200,
+                    height=50,
+                ),
+                    ft.ElevatedButton(
+                    "Imprimir dados",
+                    on_click=generate_pdf,
                     style=ft.ButtonStyle(
                         color={ft.ControlState.DEFAULT: "white"},
                         bgcolor={ft.ControlState.DEFAULT: "#1e1e1e"},

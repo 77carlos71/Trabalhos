@@ -1,0 +1,83 @@
+body {
+    background-color: #0a0a0a; /* Fundo escuro */
+    color: #e1e1e1; /* Texto claro */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background: url('https://image.api.playstation.com/vulcan/img/rnd/202010/2217/p3pYq0QxntZQREXRVdAzmn1w.png') no-repeat center/cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7); /* Maior sombra para destacar o texto */
+}
+.section {
+    padding: 40px 20px;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo semitransparente para as seções */
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 90%;
+}
+.cta-button {
+    display: inline-block;
+    background-color: #b12a2a; /* Tom vermelho mais forte */
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.cta-button:hover {
+    background-color: #8b1f1f; /* Tom mais escuro quando o botão é pressionado */
+}
+.gallery-container {
+    position: relative;
+    max-width: 80%;
+    margin: auto;
+}
+.gallery-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}   
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+}
+.left {
+    left: 10px;
+}
+.right {
+    right: 10px;
+}
+footer {
+    background: #1b1b1b; /* Fundo mais escuro */
+    padding: 20px;
+    color: #888;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.footer-text {
+    color: #bbb;
+}
+.jornada-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #ccc; /* Cor de texto mais suave para leitura */
+}

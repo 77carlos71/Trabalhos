@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God of War - Fan Page</title>
+    <link rel="stylesheet" href="Landpage.css">
+    
+</head>
+<body>
+    <header>GOD OF WAR</header>
+    
+    <div class="section">
+        <h2>A Jornada de Kratos e Atreus</h2>
+        <p class="jornada-text">Tenha uma segunda chance. Kratos é pai novamente. Como mentor e protetor de Atreus,
+            um filho determinado a ganhar seu respeito, ele é forçado a encarar e controlar a fúria que há muito tempo o define<br>enquanto viaja por um mundo ameaçador ao lado do filho.</p>
+    </div>
+    
+    <div class="section">
+        <h2>Galeria</h2>
+        <div class="gallery-container">
+            <span class="arrow left" onclick="prevImage()">&#10094;</span>
+            <img class="gallery-img" src="" id="gallery-img">
+            <span class="arrow right" onclick="nextImage()">&#10095;</span>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Comprar Agora</h2>
+        <a href="https://store.steampowered.com/app/1593500/God_of_War/" class="cta-button" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/1024px-Steam_icon_logo.svg.png" alt="Steam" style="width: 20px; vertical-align: middle; margin-right: 8px;">
+            Steam
+        </a>
+        
+        <a href="https://store.playstation.com/pt-br/product/UP9000-CUSA07408_00-00000000GODOFWAR" class="cta-button" target="_blank">
+            <img src="https://static-00.iconduck.com/assets.00/playstation-icon-2048x1665-icu9gzjj.png" alt="PlayStation" style="width: 20px; vertical-align: middle; margin-right: 8px;">
+            Playstation
+        </a>
+    </div>
+    
+    <footer>
+        <p class="footer-text">&copy; 2025 Fan Page - Não oficial</p>
+        <p class="footer-text">Este site é um projeto feito por mim e não está relacionado à Sony Interactive Entertainment ou à franquia God of War.</p>
+    </footer>
+    
+    <script>
+        let images = [
+            "https://blog.br.playstation.com/tachyon/sites/4/2021/10/cde61f25fe2d0120fb6fd1804c6ecf1560e687c5-scaled.jpg", 
+            "https://miro.medium.com/v2/resize:fit:3840/format:webp/1*FP_IYBgU7jRFv6GDUJs9Ow.jpeg", 
+            "https://platform.polygon.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/10636477/god_of_war_canoe_1920.jpg?quality=90&strip=all&crop=0,0,100,100", 
+            "https://blogs-images.forbes.com/erikkain/files/2018/01/39814594522_17f9fbbe81_k.jpg", 
+        ];
+        
+        let currentIndex = 0;
+        const galleryImg = document.getElementById("gallery-img");
+
+        function changeImage() {
+            galleryImg.style.opacity = 0;  
+            setTimeout(() => {
+                galleryImg.src = images[currentIndex];
+                galleryImg.style.opacity = 1; 
+            }, 1000); 
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            changeImage();
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            changeImage();
+        }
+
+        
+        setInterval(nextImage, 5000);  
+     
+        changeImage();
+    </script>
+</body>
+</html>

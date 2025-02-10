@@ -1,0 +1,199 @@
+/* Estilo geral do body e estrutura da página */
+body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    background-color: #181818;
+    color: #dcdcdc;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #333; /* Cor escura para navbar */
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.navbar .logo h1 {
+    color: #00ff00; /* Verde neon, tipico de programação */
+    font-size: 1.8rem;
+    margin-left: 2rem;
+}
+
+.navbar .nav-links {
+    list-style-type: none;
+    display: flex;
+    margin-right: 2rem;
+}
+
+.navbar .nav-links li {
+    margin: 0 1rem;
+}
+
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-100%); /* Mantém as setas centralizadas verticalmente */
+    font-size: 40px; /* Aumenta o tamanho da seta */
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, background-color 0.3s;
+}
+.gallery-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.gallery-description {
+    position: absolute !important;
+    top: 10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px !important;
+    border-radius: 5px !important;
+}
+
+
+.arrow:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Escurece o fundo ao passar o mouse */
+
+}
+
+.left {
+    left: 10px;
+}
+
+.right {
+    right: 10px;
+}
+
+.gallery-img {
+    width: 100%;
+    max-width: 600px; /* Limita o tamanho máximo da imagem */
+    transition: opacity 0.5s ease-in-out; /* Transição suave ao trocar as imagens */
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: #00ff00; /* Cor verde para os links */
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.navbar .nav-links a:hover {
+    color: #e74c3c; /* Vermelho ao passar o mouse */
+}
+/* Seção Sobre */
+.sobre {
+    padding: 10rem 2rem 4rem;
+    text-align: center;
+    background-color: #222222;
+}
+
+.sobre h2 {
+    font-size: 2.5rem;
+    color: #00ff00;
+    margin-bottom: 1.5rem;
+}
+
+.sobre p {
+    font-size: 1.2rem;
+    color: #bbb;
+    line-height: 1.5;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Seção Projetos */
+.projetos {
+    padding: 4rem 2rem;
+    background-color: #333;
+    text-align: center;
+}
+
+.projetos h2 {
+    font-size: 2.5rem;
+    color: #00ff00;
+    margin-bottom: 2rem;
+}
+
+.projeto-imagem {
+    width: 70%;
+    max-width: 1200px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+/* Seção Contato */
+.contato {
+    padding: 4rem 2rem;
+    background-color: #222222;
+    text-align: center;
+}
+
+.contato h2 {
+    font-size: 2.5rem;
+    color: #00ff00;
+    margin-bottom: 1.5rem;
+}
+
+.contato a {
+    color: white;
+    text-decoration: underline;
+}
+
+.contato a:hover {
+    color: #f0f0f0;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 4rem;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+/* Garantindo que a imagem ocupe 100% do espaço disponível */
+.imagem-pequena {
+    width: 100%; /* A imagem ocupará toda a largura do contêiner */
+    height: auto; /* Mantém a proporção da imagem */
+    object-fit: contain; /* Ajusta a imagem sem cortar, mantendo a proporção */
+}
+
+/* Para a galeria, garantindo que as imagens se ajustem corretamente */
+.gallery-img {
+    width: 100%; /* A imagem ocupará toda a largura do contêiner */
+    height: auto; /* Mantém a proporção da imagem */
+    object-fit: contain; /* Ajuste sem cortar, mantendo a proporção */
+}
+
+/* Caso queira forçar um tamanho fixo, por exemplo */
+/* Ajustando para não ultrapassar um tamanho máximo */
+.projeto-imagem-centralizada img {
+    max-width: 3000px; /* Limita a largura máxima */
+    width: 70%; /* Para garantir que a imagem ocupe toda a largura disponível até o limite */
+    height: auto; /* Mantém a proporção */
+    object-fit: contain; /* Ajusta a imagem sem cortar */
+}

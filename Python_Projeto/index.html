@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Portfólio de Carlos Henrique</title>
+        <link rel="stylesheet" href="styles.css">
+        <!-- Link para o Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    </head>
+    
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <h1>Carlos Henrique</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#projetos"> Projeto</a></li>
+            <li><a href="#contato"> Contato</a></li>
+        </ul>
+    </nav>
+
+    <!-- Seção Sobre -->
+    <section id="sobre" class="sobre">
+        <h2>Sobre o Projeto</h2>
+        <p>Veja abaixo um projeto desenvolvido em Python utilizando a biblioteca Flet, denominado "Pizzaria do Carlos". Este aplicativo é uma ferramenta de gestão para pizzarias, permitindo o cadastro e a visualização de clientes, pedidos e pizzas. O sistema também permite a exportação de dados para Excel, facilitando o gerenciamento e a organização das informações de forma prática e eficiente. Este projeto é o Trabalho de Conclusão de Curso do SENAC, onde são aplicados todos os conhecimentos adquiridos ao longo da formação.</p>
+    </section>
+
+    <!-- Seção Projetos -->
+    <section id="projetos" class="projetos">
+        <h2>Projeto Pizzaria do Carlos</h2>
+        
+        <!-- Área da Imagem com navegação -->
+        <div class="projeto-imagem-centralizada">
+            <img src="/Variados/Python_Projeto/public/Captura de tela 2025-02-10 163440.png" alt="Projeto Pizzaria" id="imagemProjetos" class="imagem-pequena gallery-img" />
+
+        </div>
+
+        <!-- Setas para navegação de imagens -->
+        <div class="gallery-container">
+            <span class="arrow left" onclick="prevImage()">&#10094;</span>
+            <img class="gallery-img" src="" id="gallery-img">
+            <span class="arrow right" onclick="nextImage()">&#10095;</span>
+            <div class="gallery-description" id="gallery-description"></div> <!-- Descrição da imagem -->
+        </div>
+        
+    </section>
+
+    <!-- Seção de Contato -->
+    <section id="contato" class="contato">
+        <h2>Entre em Contato</h2>
+        <p>Envie uma mensagem para o meu e-mail ou entre em contato pelo WhatsApp:</p>
+        <p><strong>Email:</strong> <a href="mailto:carloshenriquealvarenga36@gmail.com">carloshenriquealvarenga36@gmail.com</a></p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/5535910149484" target="_blank">Clique aqui para enviar uma mensagem</a></p>
+        <p><strong>Telefone:</strong> <span>(35) 9 1014-9484</span></p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Carlos Henrique. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Definindo as imagens da galeria
+        const imagens = [
+            "/Variados/Python_Projeto/public/Captura de tela 2025-02-10 163440.png", 
+            "/Variados/Python_Projeto/public/Captura de tela 2025-02-10 163910.png", // Adicione suas outras imagens aqui
+            "/Variados/Python_Projeto/public/Captura de tela 2025-02-10 164329.png"  // Mais imagens
+        ];
+
+        const descricoes = [
+            "Imagem da tela 'Pedidos' do projeto, apresentando informações como data, hora, status de preparo, nome do cliente e código único para organização. Ao clicar no ícone de informações (i), um modal é exibido com detalhes adicionais sobre o pedido. O botão 'Exportar' coleta os dados exibidos na tela e gera um arquivo Excel",
+            "Imagem ilustrando a tela 'Pizzas', onde são apresentados os ingredientes de cada pizza, juntamente com um botão para cadastro. Ao clicar no ícone de lápis, é possível realizar a edição dos detalhes da pizza.",
+            "Imagem mostrando a tela 'Clientes', na qual são exibidas informações como nome, endereço e telefone. Ao clicar no ícone de informações (i), são apresentadas informações adicionais e detalhadas sobre o cliente."
+        ];
+
+        let imagemAtual = 0; // Índice da imagem atual
+
+        // Função para exibir a imagem e a descrição
+        function showImage() {
+            const imagem = document.getElementById("imagemProjetos");
+            const descricao = document.getElementById("gallery-description");
+
+            imagem.style.opacity = 0; // Faz a imagem desaparecer suavemente
+            setTimeout(() => {
+                imagem.src = imagens[imagemAtual]; // Atualiza a imagem visível
+                descricao.textContent = descricoes[imagemAtual]; // Atualiza a descrição
+                imagem.style.opacity = 1; // Faz a imagem aparecer suavemente
+            }, 500); // Espera o tempo da transição de opacidade
+        }
+
+        // Função para mostrar a próxima imagem
+        function nextImage() {
+            if (imagemAtual < imagens.length - 1) {
+                imagemAtual++;
+            } else {
+                imagemAtual = 0; // Volta para a primeira imagem
+            }
+            showImage();
+        }
+
+        // Função para mostrar a imagem anterior
+        function prevImage() {
+            if (imagemAtual > 0) {
+                imagemAtual--;
+            } else {
+                imagemAtual = imagens.length - 1; // Vai para a última imagem
+            }
+            showImage();
+        }
+
+        // Inicializa com a imagem atual
+        showImage();
+
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "i" || e.key === "I")) {
+                e.preventDefault();
+            }
+            if (e.key === "F12") {
+                e.preventDefault();
+            }
+        });
+
+        // Adicionando rolagem suave para as âncoras
+        const links = document.querySelectorAll('a[href^="#"]');
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                window.scrollTo({
+                    top: targetSection.offsetTop - 60, // Ajuste a altura do cabeçalho
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
